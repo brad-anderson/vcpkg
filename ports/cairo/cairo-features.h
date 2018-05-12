@@ -25,12 +25,12 @@
 #define CAIRO_HAS_USER_FONT 1
 
 /* Require GObject */
-#define CAIRO_HAS_GOBJECT_FUNCTIONS 1
+#define CAIRO_HAS_GOBJECT_FUNCTIONS 0
 
 /* Require FreeType */
-#define CAIRO_HAS_FT_FONT 1
+#define CAIRO_HAS_FT_FONT 0
 
 /* Require FontConfig */
-#define CAIRO_HAS_FC_FONT 1
+#define CAIRO_HAS_FC_FONT 0
 
 #endif

@@ -145,7 +145,7 @@ file(GLOB SOURCES
 # script surface
 "cairo-script-surface.c"
 # fontconfig + freetype
-"cairo-ft-font.c"
+#"cairo-ft-font.c"
 )
 
 set(CMAKE_DEBUG_POSTFIX "d")
@@ -159,24 +159,28 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 find_library(PIXMAN_LIBRARY NAMES pixman-1${PIXMAN_SUFFIX})
 
-find_package(Freetype CONFIG REQUIRED)
-
-# Cairo needs to be told which features of FreeType are availible
-add_definitions(
-    -DHAVE_FT_GLYPHSLOT_EMBOLDEN=1
-    -DHAVE_FT_LIBRARY_SETLCDFILTER=1
-    -DHAVE_FT_GLYPHSLOT_OBLIQUE=1
-    -DHAVE_FT_LOAD_SFNT_TABLE=1
-    -DHAVE_FT_GET_X11_FONT_FORMAT=1)
-
-# Find FontConfig
-find_library(FONTCONFIG_LIBRARY fontconfig)
+#find_package(Freetype CONFIG REQUIRED)
+#
+## Cairo needs to be told which features of FreeType are availible
+#add_definitions(
+#    -DHAVE_FT_GLYPHSLOT_EMBOLDEN=1
+#    -DHAVE_FT_LIBRARY_SETLCDFILTER=1
+#    -DHAVE_FT_GLYPHSLOT_OBLIQUE=1
+#    -DHAVE_FT_LOAD_SFNT_TABLE=1
+#    -DHAVE_FT_GET_X11_FONT_FORMAT=1)
+#
+## Find FontConfig
+#find_library(FONTCONFIG_LIBRARY fontconfig)
 
 add_library(cairo ${SOURCES})
 # cairo produces a lot of warnings which are disabled here because they otherwise fill up the log files
 target_compile_options(cairo PUBLIC "/wd4244" PUBLIC "/wd4146" PUBLIC "/wd4312" PUBLIC "/wd4267" 
                              PUBLIC "/wd4996" PUBLIC "/wd4311" PUBLIC "/wd4334" PUBLIC "/wd4101")
-target_link_libraries(cairo gdi32 msimg32 user32 ZLIB::ZLIB PNG::PNG freetype ${PIXMAN_LIBRARY} ${FONTCONFIG_LIBRARY})
+target_link_libraries(cairo gdi32 msimg32 user32 ZLIB::ZLIB PNG::PNG 
+  #freetype
+  ${PIXMAN_LIBRARY}
+  #${FONTCONFIG_LIBRARY}
+  )
 
 install(TARGETS cairo
   RUNTIME DESTINATION bin
@@ -199,15 +203,15 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 # Make GLib's GObject available
-find_path(GLIB_INCLUDE_DIR glib.h)
-find_library(GLIB_LIBRARY NAMES glib-2.0)
-find_library(GOBJECT_LIBRARY NAMES gobject-2.0)
-set(GLIB_LIBRARIES ${GLIB_LIBRARY} ${GOBJECT_LIBRARY})
-
-add_library(cairo-gobject ${CAIRO_GOBJECT_SOURCES}) 
-target_link_libraries(cairo-gobject cairo ${GLIB_LIBRARIES})
-target_include_directories(cairo-gobject PRIVATE ${GLIB_INCLUDE_DIR})
-install(TARGETS cairo-gobject
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib)
+#find_path(GLIB_INCLUDE_DIR glib.h)
+#find_library(GLIB_LIBRARY NAMES glib-2.0)
+#find_library(GOBJECT_LIBRARY NAMES gobject-2.0)
+#set(GLIB_LIBRARIES ${GLIB_LIBRARY} ${GOBJECT_LIBRARY})
+#
+#add_library(cairo-gobject ${CAIRO_GOBJECT_SOURCES}) 
+#target_link_libraries(cairo-gobject cairo ${GLIB_LIBRARIES})
+#target_include_directories(cairo-gobject PRIVATE ${GLIB_INCLUDE_DIR})
+#install(TARGETS cairo-gobject
+#    RUNTIME DESTINATION bin
+#    LIBRARY DESTINATION lib
+#    ARCHIVE DESTINATION lib)
