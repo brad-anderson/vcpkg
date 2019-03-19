@@ -1,0 +1,35 @@
+diff --git a/src/cairo-recording-surface.c b/src/cairo-recording-surface.c
+index 6df8b08..83d574a 100644
+--- a/src/cairo-recording-surface.c
++++ b/src/cairo-recording-surface.c
+@@ -120,7 +120,7 @@ static const cairo_surface_backend_t cairo_recording_surface_backend;
+ static int bbtree_left_or_right (struct bbtree *bbt,
+ 				 const cairo_box_t *box)
+ {
+-    int left, right;
++    int64_t left, right;
+ 
+     if (bbt->left) {
+ 	cairo_box_t *e = &bbt->left->extents;
+@@ -131,8 +131,8 @@ static int bbtree_left_or_right (struct bbtree *bbt,
+ 	b.p2.x = MAX (e->p2.x, box->p2.x);
+ 	b.p2.y = MAX (e->p2.y, box->p2.y);
+ 
+-	left = _cairo_fixed_integer_part (b.p2.x - b.p1.x) * _cairo_fixed_integer_part (b.p2.y - b.p1.y);
+-	left -= _cairo_fixed_integer_part (e->p2.x - e->p1.x) * _cairo_fixed_integer_part (e->p2.y - e->p1.y);
++	left = ((int64_t)_cairo_fixed_integer_part (b.p2.x - b.p1.x) * (int64_t)_cairo_fixed_integer_part (b.p2.y - b.p1.y)) -
++		   ((int64_t)_cairo_fixed_integer_part (e->p2.x - e->p1.x) * (int64_t)_cairo_fixed_integer_part (e->p2.y - e->p1.y));
+     } else
+ 	left = 0;
+ 
+@@ -145,8 +145,8 @@ static int bbtree_left_or_right (struct bbtree *bbt,
+ 	b.p2.x = MAX (e->p2.x, box->p2.x);
+ 	b.p2.y = MAX (e->p2.y, box->p2.y);
+ 
+-	right = _cairo_fixed_integer_part (b.p2.x - b.p1.x) * _cairo_fixed_integer_part (b.p2.y - b.p1.y);
+-	right -= _cairo_fixed_integer_part (e->p2.x - e->p1.x) * _cairo_fixed_integer_part (e->p2.y - e->p1.y);
++	right = ((int64_t)_cairo_fixed_integer_part (b.p2.x - b.p1.x) * (int64_t)_cairo_fixed_integer_part (b.p2.y - b.p1.y)) -
++			((int64_t)_cairo_fixed_integer_part (e->p2.x - e->p1.x) * (int64_t)_cairo_fixed_integer_part (e->p2.y - e->p1.y));
+     } else
+ 	right = 0;
+ 
