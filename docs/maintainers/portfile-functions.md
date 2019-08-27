@@ -6,6 +6,7 @@
 - [vcpkg\_apply\_patches](vcpkg_apply_patches.md)
 - [vcpkg\_build\_cmake](vcpkg_build_cmake.md)
 - [vcpkg\_build\_msbuild](vcpkg_build_msbuild.md)
+- [vcpkg\_check\_features](vcpkg_check_features.md)
 - [vcpkg\_check\_linkage](vcpkg_check_linkage.md)
 - [vcpkg\_clean\_msbuild](vcpkg_clean_msbuild.md)
 - [vcpkg\_configure\_cmake](vcpkg_configure_cmake.md)
@@ -23,4 +24,5 @@
 - [vcpkg\_from\_gitlab](vcpkg_from_gitlab.md)
 - [vcpkg\_install\_cmake](vcpkg_install_cmake.md)
 - [vcpkg\_install\_msbuild](vcpkg_install_msbuild.md)
+- [vcpkg\_prettify\_command](vcpkg_prettify_command.md)
 - [vcpkg\_test\_cmake](vcpkg_test_cmake.md)
